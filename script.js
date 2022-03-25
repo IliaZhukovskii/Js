@@ -1,6 +1,6 @@
 
 
-let title = "Заголовок";
+let title = "lesson02";
 const screens = "Скрины";
 let screenPrice = 20;
 let rollback = 10;
