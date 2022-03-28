@@ -1,4 +1,4 @@
-
+'use strict';
 
 let title = "lesson02";
 let screens = "Простые, Сложные, Интерактивные";
