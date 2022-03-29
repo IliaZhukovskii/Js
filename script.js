@@ -23,13 +23,11 @@ function showTypeOf(variable){
 }
 
 const getAllServicePrices = function(){
-  allServicePrices = servicePrice1 + servicePrice2;
-  return allServicePrices;
+  return servicePrice1 + servicePrice2;
 }
 
 function getFullPrice(price1, price2){
-  fullPrice = price1 + price2;
-  return fullPrice;
+  return price1 + price2;
 }
 
 function getTitle(str){
@@ -43,8 +41,7 @@ function getTitle(str){
 }
 
 function getServicePercentPrices(price){
-  servicePercentPrice = Math.round(price - (price * (rollback / 100)));
-  return servicePercentPrice;
+  return Math.round(price - (price * (rollback / 100)));
 }
 
 function getRollbackMessage (price){
@@ -59,15 +56,13 @@ function getRollbackMessage (price){
   }
 }
 
-
-getAllServicePrices();
-getFullPrice(screenPrice, allServicePrices);
-
+servicePercentPrice = getServicePercentPrices(fullPrice);
+allServicePrices = getAllServicePrices(); 
+fullPrice = getFullPrice(screenPrice, allServicePrices);
 
 showTypeOf(title);
 showTypeOf(screenPrice);
 showTypeOf(adaptive);
-
 
 console.log("Типы экранов для разработки: " + screens);
 console.log(getRollbackMessage(fullPrice));
