@@ -39,8 +39,11 @@ function getAllServicePrices(){
   do{     
       prompt("Какой дополнительный тип услуги нужен?", "Отправка писем");
       price = +prompt("Сколько это будет стоить?", "100");
+      while (!isNumber(price)){
+        price = +prompt("Сколько это будет стоить?", "100");  
+      }
       price1 += price;
-      i++;
+      i++;     
   } while (i < 2);
   return price1;
 }
