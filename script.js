@@ -15,7 +15,7 @@ let allServicePrices = 0;
 let servicePercentPrice = 0;
 
 
-const isNumber = function (num){
+function isNumber(num){
    return !isNaN(parseFloat(num) && isFinite(num));
 }
 
@@ -32,25 +32,17 @@ function asking(){
   adaptive = confirm("Нужен ли адаптив на сайте?");
 }
 
-const getAllServicePrices = function(){
-  let price1;
-  let price2;
-  for (let i = 0; i < 2; i++){
-    if (i === 0){
-      service1 = prompt("Какой дополнительный тип услуги нужен?", "Отправка форм");
-      price1 = +prompt("Сколько это будет стоить?", "100");
-      while (!isNumber(price1)){
-        price1 = +prompt("Сколько это будет стоить?", "100");  
-      }
-    }else if (i === 1){
-      service2 = prompt("Какой дополнительный тип услуги нужен?", "Анимация");
-      price2 = +prompt("Сколько это будет стоить?", "100");
-      while (!isNumber(price2)){
-        price2 = +prompt("Сколько это будет стоить?", "100");  
-      }
-    } 
-  }
-  return price1 + price2;
+function getAllServicePrices(){
+  let price = 0;
+  let price1 = 0;
+  let i = 0;
+  do{     
+      prompt("Какой дополнительный тип услуги нужен?", "Отправка писем");
+      price = +prompt("Сколько это будет стоить?", "100");
+      price1 += price;
+      i++;
+  } while (i < 2);
+  return price1;
 }
 
 function showTypeOf(variable){
