@@ -1,9 +1,9 @@
 'use strict';
 
 
-
 const appData = {
-  title: '',
+
+  title:'',
   screens: [],
   screenPrice: 0,
   rollback: 10,
@@ -12,6 +12,26 @@ const appData = {
   fullPrice: 0,
   allServicePrices: 0,
   servicePercentPrice: 0,
+  title2: document.getElementsByTagName('h1'),
+  buttons: document.getElementsByClassName('handler_btn'),
+  buttonPlus: document.querySelector('.screen-btn'),
+  percent: document.querySelectorAll('.other-items .percent'),
+  number: document.querySelectorAll('.other-items .number'),
+  range: document.querySelector('.rollback > .main-controls__range > [type=range]'),
+  rangeValue: document.querySelector('.rollback > .main-controls__range > .range-value'),
+  totalInput: document.getElementsByClassName('total-input'),
+  screen: document.querySelectorAll('.screen'),
+
+
+  elements: function (){
+    for (let elem of appData.title2){
+        appData.title2 = elem;
+    }
+
+    for (const elem of appData.totalInput){
+     console.log(elem);
+    }
+  },
 
 
   isNumber: function (num) {
@@ -24,6 +44,7 @@ const appData = {
 
   start: function () {
     appData.asking();
+    appData.elements();
     appData.addPrices();
     appData.getFullPrice(appData.screenPrice, appData.allServicePrices);
     appData.getServicePercentPrices(appData.fullPrice);
@@ -121,11 +142,6 @@ const appData = {
     console.log(appData.getRollbackMessage(appData.fullPrice));
     console.log("Стоимость с учётом отката посреднику: " + appData.servicePercentPrice + " $");
     console.log("Стоимость дополнительных услуг: " + appData.allServicePrices + " $");
-
-
-    /* for (let key in appData) {
-      console.log("Ключ: " + key + " Значение: " + appData[key]);
-    } */
   }
 
 };
