@@ -1,9 +1,18 @@
 'use strict';
 
+let titleDoc = document.getElementsByTagName('h1');
+let buttons = document.getElementsByClassName('handler_btn');
+let buttonPlus = document.querySelector('.screen-btn');
+let percent = document.querySelectorAll('.other-items .percent');
+let number = document.querySelectorAll('.other-items .number');
+let range = document.querySelector('.rollback > .main-controls__range > [type=range]');
+let rangeValue = document.querySelector('.rollback > .main-controls__range > .range-value');
+let totalInput = document.getElementsByClassName('total-input');
+let scren = document.querySelectorAll('.screen');
 
 const appData = {
 
-  title:'',
+  title: '',
   screens: [],
   screenPrice: 0,
   rollback: 10,
@@ -12,24 +21,15 @@ const appData = {
   fullPrice: 0,
   allServicePrices: 0,
   servicePercentPrice: 0,
-  title2: document.getElementsByTagName('h1'),
-  buttons: document.getElementsByClassName('handler_btn'),
-  buttonPlus: document.querySelector('.screen-btn'),
-  percent: document.querySelectorAll('.other-items .percent'),
-  number: document.querySelectorAll('.other-items .number'),
-  range: document.querySelector('.rollback > .main-controls__range > [type=range]'),
-  rangeValue: document.querySelector('.rollback > .main-controls__range > .range-value'),
-  totalInput: document.getElementsByClassName('total-input'),
-  screen: document.querySelectorAll('.screen'),
 
-
-  elements: function (){
-    for (let elem of appData.title2){
-        appData.title2 = elem;
+  elements: function () {
+    for (let elem of titleDoc) {
+      titleDoc = elem;
+      console.log(elem);
     }
 
-    for (const elem of appData.totalInput){
-     console.log(elem);
+    for (const elem of totalInput) {
+      console.log(elem);
     }
   },
 
@@ -84,13 +84,13 @@ const appData = {
       do {
         name = prompt("Какой дополнительный тип услуги нужен?", "Отправка писем");
       } while (!appData.isString(name));
-    
+
       do {
         price = prompt("Сколько это будет стоить?", "100");
       } while (!appData.isNumber(price));
 
       appData.services[[i] + ": " + name] = +price;
-   
+
     }
     appData.adaptive = confirm("Нужен ли адаптив на сайте?");
   },
@@ -98,8 +98,8 @@ const appData = {
   addPrices: function () {
     for (let screen of appData.screens) {
       appData.screenPrice += screen.price;
-    } 
-  
+    }
+
     for (let key in appData.services) {
       appData.allServicePrices += appData.services[key];
     }
