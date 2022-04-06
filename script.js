@@ -75,9 +75,14 @@ const appData = {
   },
 
   addPrices: function () {
-    for (let screen of appData.screens) {
+    /* for (let screen of appData.screens) {
       appData.screenPrice += screen.price;
-    } 
+    }  */
+
+    appData.screenPrice = appData.screens.reduce(function(a, screen){
+      return appData.screenPrice += screen.price;
+    }, 0);
+   
   
     for (let key in appData.services) {
       appData.allServicePrices += appData.services[key];
