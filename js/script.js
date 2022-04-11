@@ -67,12 +67,13 @@ const appData = {
         startBtn.disabled = true;
       } else {
         startBtn.disabled = false;
+        appData.test();
       }
       select.addEventListener('input', appData.test);
-      input.addEventListener('input', appData.test);
+      input.addEventListener('input', appData.test); 
     });
   },
-
+  
   //Изменение названия документа
   addTitle: function () {
     document.title = title.textContent;
