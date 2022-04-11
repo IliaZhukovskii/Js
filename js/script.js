@@ -1,4 +1,5 @@
 'use strict';
+
 //Получение переменных со страницы
 let title = document.getElementsByTagName('h1')[0];
 let buttonPlus = document.querySelector('.screen-btn');
@@ -40,6 +41,7 @@ const appData = {
 
   //Запуск методов
   init: function () {
+    appData.test();
     appData.addTitle();
     appData.range();
     startBtn.addEventListener('click', appData.start);
@@ -53,6 +55,22 @@ const appData = {
     appData.addPrices();
     /*  appData.logger(); */
     appData.showResult();
+  },
+
+  //Проверка пустых полей
+  test: function () {
+    let screens = document.querySelectorAll('.screen');
+    screens.forEach(function (screen) {
+      let select = screen.querySelector('select');
+      let input = screen.querySelector('input');
+      if (select.value == "" || input.value == "") {
+        startBtn.disabled = true;
+      } else {
+        startBtn.disabled = false;
+      }
+      select.addEventListener('input', appData.test);
+      input.addEventListener('input', appData.test);
+    });
   },
 
   //Изменение названия документа
@@ -69,16 +87,14 @@ const appData = {
       let input = screen.querySelector('input');
       let selectName = select.options[select.selectedIndex].textContent;
 
-      //Проверка на пустые поля
-      if (select.value == "" || input.value == "") {
-        alert("Выберите экраны и их кол-во");
-      } else {
-        appData.screens.push({
-          id: index,
-          name: selectName,
-          price: +select.value * +input.value
-        });
+      appData.screens.push({
+        id: index,
+        name: selectName,
+        price: +select.value * +input.value
+      });
 
+      //Запись экранов в массив для дльнейшего подсчета
+      if (select.value !== "") {
         appData.countScreensArr.push(selectName);
       }
     });
@@ -113,14 +129,14 @@ const appData = {
   addScreenBlock: function () {
     let cloneScreen = screens[0].cloneNode(true);
     screens[screens.length - 1].after(cloneScreen);
+    appData.test();
   },
 
   //Отслеживание range
   range: function () {
     let rangeSpan = function () {
-      rangeValue.textContent = range.value;
+      rangeValue.textContent = range.value + "%";
       appData.rollback = range.value;
-      console.log(appData.rollback);
     };
 
     range.addEventListener('input', rangeSpan);
@@ -149,9 +165,9 @@ const appData = {
       appData.servicePricesPercent += appData.screenPrice * (appData.servicesPercent[key] / 100);
     }
     appData.fullPrice = appData.screenPrice + appData.servicePricesNumber + appData.servicePricesPercent;
-    
+
     appData.servicesPercentPrices = appData.fullPrice - (appData.fullPrice * (appData.rollback / 100));
-    
+
     for (let i = 0; i <= appData.countScreensArr.length; i++) {
       appData.countScreens = i;
     }
