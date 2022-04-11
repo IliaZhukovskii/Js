@@ -59,7 +59,7 @@ const appData = {
 
   //Проверка пустых полей
   test: function () {
-    let screens = document.querySelectorAll('.screen');
+    screens = document.querySelectorAll('.screen'); 
     screens.forEach(function (screen) {
       let select = screen.querySelector('select');
       let input = screen.querySelector('input');
