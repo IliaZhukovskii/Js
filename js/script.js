@@ -43,7 +43,8 @@ const appData = {
   //Запуск методов
   init: function () {
     startBtn.disabled = true;
-    this.test();
+    appData.test();
+
     this.addTitle();
     this.range();
     startBtn.addEventListener('click', this.start);
@@ -61,16 +62,32 @@ const appData = {
     appData.displayStart();
   },
 
+  //Проверка пустых полей
+  test: function () {
+    screens = document.querySelectorAll('.screen');
+    for (let item of screens) {
+      let select = item.querySelectorAll('.main-controls__select > select');
+      let input = item.querySelectorAll('.main-controls__input > input');
+      for(let item of select){
+        item.addEventListener('input', console.log('изменили select'));
+      }
+      for(let item of input){
+        item.addEventListener('input', console.log('изменили input'));
+      }
+    }
+  },
+
+
   //Метод блокировки всех input и select
-  displayStart: function(){
+  displayStart: function () {
     startBtn.style.display = "none";
     resetBtn.style.display = "block";
-    
+
     screens = document.querySelectorAll('.screen');
     let inputText = document.querySelectorAll('input[type=text]');
     //Записал заблокированные input в массив, что бы потом разблокировать только эти
     inputText.forEach((item) => {
-      if(item.disabled == false){
+      if (item.disabled == false) {
         item.disabled = true;
         inputDisabled.push(item);
       }
@@ -81,11 +98,11 @@ const appData = {
       select.disabled = true;
     });
 
-    
+
   },
 
   //Сброс
-  reset: function(){
+  reset: function () {
     startBtn.style.display = "block";
     resetBtn.style.display = "none";
 
@@ -107,7 +124,7 @@ const appData = {
 
     //Сброс range и результатов
     range.value = 0;
-    rangeValue.textContent = 0 +"%";
+    rangeValue.textContent = 0 + "%";
     total.value = "0";
     totalCountOther.value = "0";
     fullTotalCount.value = "0";
@@ -115,19 +132,6 @@ const appData = {
     totalCount.value = "0";
   },
 
-  //Проверка пустых полей
-  test: function () {
-    screens = document.querySelectorAll('.screen'); 
-    for (let item of screens){
-      let select = item.querySelector('select');
-      let input = item.querySelector('input');
-      if (select.value == "" || input.value == "") {
-        startBtn.disabled = false;
-        return  startBtn.disabled;
-      }
-    }
-  },
-  
   //Изменение названия документа
   addTitle: function () {
     document.title = title.textContent;
@@ -184,7 +188,6 @@ const appData = {
   addScreenBlock: function () {
     let cloneScreen = screens[0].cloneNode(true);
     screens[screens.length - 1].after(cloneScreen);
-    appData.test();
   },
 
   //Отслеживание range
