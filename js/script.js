@@ -42,14 +42,13 @@ const appData = {
 
   //Запуск методов
   init: function () {
-    startBtn.disabled = true;
     appData.test();
-
     this.addTitle();
     this.range();
     startBtn.addEventListener('click', this.start);
     buttonPlus.addEventListener('click', this.addScreenBlock);
     resetBtn.addEventListener('click', this.reset);
+    console.log(screens);
   },
 
   //Запуск методов
@@ -65,18 +64,20 @@ const appData = {
   //Проверка пустых полей
   test: function () {
     screens = document.querySelectorAll('.screen');
+    startBtn.disabled = false;
     for (let item of screens) {
-      let select = item.querySelectorAll('.main-controls__select > select');
-      let input = item.querySelectorAll('.main-controls__input > input');
-      for(let item of select){
-        item.addEventListener('input', console.log('изменили select'));
-      }
-      for(let item of input){
-        item.addEventListener('input', console.log('изменили input'));
+      let select = item.querySelector('select');
+      let input = item.querySelector('input');
+
+      select.addEventListener('input', appData.test);
+      input.addEventListener('input', appData.test);
+
+      if (select.value == "" || input.value == "") {
+        startBtn.disabled = true;
+        return;
       }
     }
   },
-
 
   //Метод блокировки всех input и select
   displayStart: function () {
@@ -111,17 +112,23 @@ const appData = {
       item.value = "";
     });
 
-    screens.forEach((item) => {
+    screens.forEach((item, index) => {
       let select = item.querySelector('select');
       select.disabled = false;
       select.value = "";
+      if(index !== 0){
+        item.remove();
+      }
     });
-
+    
     let inputCheckbox = document.querySelectorAll('input[type=checkbox]');
     inputCheckbox.forEach((item) => {
       item.checked = false;
     });
 
+    
+   
+    
     //Сброс range и результатов
     range.value = 0;
     rangeValue.textContent = 0 + "%";
