@@ -41,6 +41,7 @@ const appData = {
 
   //Запуск методов
   init: function () {
+    startBtn.disabled = true;
     appData.test();
     appData.addTitle();
     appData.range();
@@ -60,18 +61,14 @@ const appData = {
   //Проверка пустых полей
   test: function () {
     screens = document.querySelectorAll('.screen'); 
-    screens.forEach(function (screen) {
-      let select = screen.querySelector('select');
-      let input = screen.querySelector('input');
+    for (let item of screens){
+      let select = item.querySelector('select');
+      let input = item.querySelector('input');
       if (select.value == "" || input.value == "") {
-        startBtn.disabled = true;
-      } else {
         startBtn.disabled = false;
-        appData.test();
+        return  startBtn.disabled;
       }
-      select.addEventListener('input', appData.test);
-      input.addEventListener('input', appData.test); 
-    });
+    }
   },
   
   //Изменение названия документа
