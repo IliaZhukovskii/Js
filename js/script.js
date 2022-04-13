@@ -42,13 +42,12 @@ const appData = {
 
   //Запуск методов
   init: function () {
-    appData.test();
+    this.test();
     this.addTitle();
     this.range();
     startBtn.addEventListener('click', this.start);
     buttonPlus.addEventListener('click', this.addScreenBlock);
     resetBtn.addEventListener('click', this.reset);
-    console.log(screens);
   },
 
   //Запуск методов
@@ -69,8 +68,8 @@ const appData = {
       let select = item.querySelector('select');
       let input = item.querySelector('input');
 
-      select.addEventListener('input', appData.test);
-      input.addEventListener('input', appData.test);
+      select.addEventListener('input', this.test);
+      input.addEventListener('input', this.test);
 
       if (select.value == "" || input.value == "") {
         startBtn.disabled = true;
