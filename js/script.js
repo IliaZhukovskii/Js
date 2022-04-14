@@ -46,8 +46,8 @@ const appData = {
     this.addTitle();
     this.range();
     startBtn.addEventListener('click', this.start.bind(appData));
-    buttonPlus.addEventListener('click', this.addScreenBlock);
-    resetBtn.addEventListener('click', this.reset);
+    buttonPlus.addEventListener('click', this.addScreenBlock.bind(appData));
+    resetBtn.addEventListener('click', this.reset.bind(appData));
   },
 
   //Запуск методов
@@ -151,6 +151,7 @@ const appData = {
   addScreenBlock: function () {
     let cloneScreen = screens[0].cloneNode(true);
     screens[screens.length - 1].after(cloneScreen);
+    this.test();
   },
 
   //Отслеживание range
@@ -201,6 +202,7 @@ const appData = {
     startBtn.style.display = "block";
     resetBtn.style.display = "none";
     buttonPlus.disabled = false;
+    startBtn.disabled = true;
 
     inputDisabled.forEach((item) => {
       item.disabled = false;
@@ -230,10 +232,6 @@ const appData = {
     totalCountRollback.value = "0";
     totalCount.value = "0";
 
-    appData.default.call(appData);
-  },
-
-  default: function () {
     this.screens = [];
     this.screenPrice = 0;
     this.rollback = 10;
@@ -249,6 +247,8 @@ const appData = {
     this.countScreensArr = [];
     this.countScreens = 0;
   },
+
+  
 
   //Изменение названия документа
   addTitle: function () {
