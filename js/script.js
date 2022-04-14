@@ -52,12 +52,16 @@ const appData = {
 
   //Запуск методов
   start: function () {
-    appData.addScreens();
-    appData.addServices();
-    appData.addPrices();
-    /*  appData.logger(); */
-    appData.showResult();
-    appData.displayStart();
+    const newAddScreens = appData.addScreens.bind(appData);
+    newAddScreens();
+    const newAddServices = appData.addServices.bind(appData);
+    newAddServices();
+    const newAddPrices = appData.addPrices.bind(appData);
+    newAddPrices();
+    const newShowResult = appData.showResult.bind(appData);
+    newShowResult();
+    const newDisplayStart = appData.displayStart.bind(appData);
+    newDisplayStart();
   },
 
   //Проверка пустых полей
@@ -82,6 +86,7 @@ const appData = {
   displayStart: function () {
     startBtn.style.display = "none";
     resetBtn.style.display = "block";
+    buttonPlus.disabled = true;
 
     screens = document.querySelectorAll('.screen');
     let inputText = document.querySelectorAll('input[type=text]');
@@ -97,50 +102,6 @@ const appData = {
       let select = item.querySelector('select');
       select.disabled = true;
     });
-
-
-  },
-
-  //Сброс
-  reset: function () {
-    startBtn.style.display = "block";
-    resetBtn.style.display = "none";
-
-    inputDisabled.forEach((item) => {
-      item.disabled = false;
-      item.value = "";
-    });
-
-    screens.forEach((item, index) => {
-      let select = item.querySelector('select');
-      select.disabled = false;
-      select.value = "";
-      if(index !== 0){
-        item.remove();
-      }
-    });
-    
-    let inputCheckbox = document.querySelectorAll('input[type=checkbox]');
-    inputCheckbox.forEach((item) => {
-      item.checked = false;
-    });
-
-    
-   
-    
-    //Сброс range и результатов
-    range.value = 0;
-    rangeValue.textContent = 0 + "%";
-    total.value = "0";
-    totalCountOther.value = "0";
-    fullTotalCount.value = "0";
-    totalCountRollback.value = "0";
-    totalCount.value = "0";
-  },
-
-  //Изменение названия документа
-  addTitle: function () {
-    document.title = title.textContent;
   },
 
   //Выбор экранов
@@ -160,7 +121,7 @@ const appData = {
 
       //Запись экранов в массив для дльнейшего подсчета
       if (select.value !== "") {
-        this.countScreensArr.push(selectName);
+        this.countScreensArr.push(+input.value);
       }
     });
   },
@@ -217,24 +178,85 @@ const appData = {
 
   //Расчёты
   addPrices: function () {
+
     for (let screen of this.screens) {
       this.screenPrice += screen.price;
     }
+    this.screens = [];
 
     for (let key in this.servicesNumber) {
       this.servicePricesNumber += this.servicesNumber[key];
     }
-
     for (let key in this.servicesPercent) {
       this.servicePricesPercent += this.screenPrice * (this.servicesPercent[key] / 100);
     }
     this.fullPrice = this.screenPrice + this.servicePricesNumber + this.servicePricesPercent;
-
     this.servicesPercentPrices = this.fullPrice - (this.fullPrice * (this.rollback / 100));
 
-    for (let i = 0; i <= this.countScreensArr.length; i++) {
-      this.countScreens = i;
-    }
+    this.countScreens = this.countScreensArr.reduce((a, b) => {
+      return a + b;
+    }, 0);
+    this.countScreensArr = [];
+  },
+
+  //Сброс
+  reset: function () {
+    startBtn.style.display = "block";
+    resetBtn.style.display = "none";
+    buttonPlus.disabled = false;
+
+    inputDisabled.forEach((item) => {
+      item.disabled = false;
+      item.value = "";
+    });
+
+    screens.forEach((item, index) => {
+      let select = item.querySelector('select');
+      select.disabled = false;
+      select.value = "";
+      if (index !== 0) {
+        item.remove();
+      }
+    });
+
+    let inputCheckbox = document.querySelectorAll('input[type=checkbox]');
+    inputCheckbox.forEach((item) => {
+      item.checked = false;
+    });
+
+    //Сброс range и результатов
+    range.value = 0;
+    rangeValue.textContent = 0 + "%";
+    total.value = "0";
+    totalCountOther.value = "0";
+    fullTotalCount.value = "0";
+    totalCountRollback.value = "0";
+    totalCount.value = "0";
+
+    appData.default.call(appData);
+
+  },
+
+  default: function () {
+    this.screens = [];
+    this.screenPrice = 0;
+    this.rollback = 10;
+    this.adaptive = true;
+    this.services = {};
+    this.fullPrice = 0;
+    this.servicePricesPercent = 0;
+    this.servicePricesNumber = 0;
+    this.servicePrices = 0;
+    this.servicesPercentPrices = 0;
+    this.servicesPercent = {};
+    this.servicesNumber = {};
+    this.countScreensArr = [];
+    this.countScreens = 0;
+  },
+
+  //Изменение названия документа
+  addTitle: function () {
+    document.title = title.textContent;
   },
 
   //Вывод в консоль
@@ -248,3 +270,5 @@ const appData = {
 };
 
 appData.init();
+
+
