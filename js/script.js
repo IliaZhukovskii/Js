@@ -45,23 +45,18 @@ const appData = {
     this.test();
     this.addTitle();
     this.range();
-    startBtn.addEventListener('click', this.start);
+    startBtn.addEventListener('click', this.start.bind(appData));
     buttonPlus.addEventListener('click', this.addScreenBlock);
     resetBtn.addEventListener('click', this.reset);
   },
 
   //Запуск методов
   start: function () {
-    const newAddScreens = appData.addScreens.bind(appData);
-    newAddScreens();
-    const newAddServices = appData.addServices.bind(appData);
-    newAddServices();
-    const newAddPrices = appData.addPrices.bind(appData);
-    newAddPrices();
-    const newShowResult = appData.showResult.bind(appData);
-    newShowResult();
-    const newDisplayStart = appData.displayStart.bind(appData);
-    newDisplayStart();
+    this.addScreens();
+    this.addServices();
+    this.addPrices();
+    this.showResult();
+    this.displayStart();
   },
 
   //Проверка пустых полей
@@ -86,6 +81,7 @@ const appData = {
   displayStart: function () {
     startBtn.style.display = "none";
     resetBtn.style.display = "block";
+
     buttonPlus.disabled = true;
 
     screens = document.querySelectorAll('.screen');
@@ -193,6 +189,7 @@ const appData = {
     this.fullPrice = this.screenPrice + this.servicePricesNumber + this.servicePricesPercent;
     this.servicesPercentPrices = this.fullPrice - (this.fullPrice * (this.rollback / 100));
 
+
     this.countScreens = this.countScreensArr.reduce((a, b) => {
       return a + b;
     }, 0);
@@ -234,7 +231,6 @@ const appData = {
     totalCount.value = "0";
 
     appData.default.call(appData);
-
   },
 
   default: function () {
@@ -270,5 +266,9 @@ const appData = {
 };
 
 appData.init();
+
+
+
+
 
 
